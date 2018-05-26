@@ -6,12 +6,14 @@
 package com.marcnuri.demo.springmockmvc.language;
 
 import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.doThrow;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.marcnuri.demo.springmockmvc.SpringMockMvcException;
-import com.marcnuri.demo.springmockmvc.language.LanguageApiControllerTest.SpringMockMvcApiControllerTestConfiguration;
+import com.marcnuri.demo.springmockmvc.language.LanguageApiControllerTest.LanguageApiControllerTestConfiguration;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -42,7 +44,7 @@ import org.springframework.util.MimeTypeUtils;
 @ContextConfiguration(classes = {
     LanguageApiController.class
 })
-@Import(SpringMockMvcApiControllerTestConfiguration.class)
+@Import(LanguageApiControllerTestConfiguration.class)
 public class LanguageApiControllerTest {
 
 //**************************************************************************************************
@@ -81,7 +83,7 @@ public class LanguageApiControllerTest {
     final List<String> mockedLanguages = Stream.concat(
         LanguageRepository.LANGUAGES.stream(),
         Stream.of(mockedEsoteric)).collect(Collectors.toList());
-    Mockito.when(languageService.getLanguages(null)).thenReturn(mockedLanguages);
+    doReturn(mockedLanguages).when(languageService).getLanguages(null);
 
     // When
     final ResultActions result = mockMvc.perform(
@@ -99,8 +101,8 @@ public class LanguageApiControllerTest {
     // Given
     final String containsParam = "' or 1=1;/*";
     final HttpStatus mockedStatus = HttpStatus.BAD_REQUEST;
-    Mockito.when(languageService.getLanguages(containsParam))
-        .thenThrow(new SpringMockMvcException(mockedStatus, "Welcome to the new century"));
+    doThrow(new SpringMockMvcException(mockedStatus, "Welcome to the new century"))
+        .when(languageService).getLanguages(containsParam);
 
     // When
     final ResultActions result = mockMvc.perform(
@@ -115,7 +117,7 @@ public class LanguageApiControllerTest {
   public void getLanguages_invalidAcceptHeader_shouldReturnException() throws Exception {
     // Given
     final String invalidAcceptMimeType = MimeTypeUtils.APPLICATION_XML_VALUE;
-    Mockito.when(languageService.getLanguages(null)).thenReturn(LanguageRepository.LANGUAGES);
+    doReturn(LanguageRepository.LANGUAGES).when(languageService).getLanguages(null);
 
     // When
     final ResultActions result = mockMvc.perform(
@@ -127,10 +129,10 @@ public class LanguageApiControllerTest {
   }
 
   @Configuration
-  protected static class SpringMockMvcApiControllerTestConfiguration {
+  protected static class LanguageApiControllerTestConfiguration {
 
     @Bean
-    public LanguageService springMockMvcService() {
+    public LanguageService languageService() {
       return Mockito.mock(LanguageService.class);
     }
 
