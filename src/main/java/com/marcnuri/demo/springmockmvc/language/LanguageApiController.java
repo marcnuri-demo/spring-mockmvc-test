@@ -8,6 +8,7 @@ package com.marcnuri.demo.springmockmvc.language;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 import com.marcnuri.demo.springmockmvc.SpringMockMvcException;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -42,7 +43,7 @@ public class LanguageApiController {
 //  Other Methods
 //**************************************************************************************************
   @RequestMapping(value = "/languages", method = GET)
-  public ResponseEntity getLanguages(@RequestParam(value = "contains", required = false) String contains) {
+  public ResponseEntity<List<String>> getLanguages(@RequestParam(value = "contains", required = false) String contains) {
     return ResponseEntity.ok(languageService.getLanguages(contains));
   }
 

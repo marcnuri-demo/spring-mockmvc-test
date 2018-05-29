@@ -7,6 +7,7 @@ package com.marcnuri.demo.springmockmvc.coffee;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -37,7 +38,7 @@ public class CoffeeApiController {
 //  Other Methods
 //**************************************************************************************************
   @RequestMapping(value = "/coffees", method = GET)
-  public ResponseEntity getCoffees() {
+  public ResponseEntity<List<String>> getCoffees() {
     return ResponseEntity.ok(coffeeService.getCoffees());
   }
 
