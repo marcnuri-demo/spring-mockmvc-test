@@ -50,7 +50,7 @@ public class LanguageApiControllerStrictUnitTest {
 //  Tests
 //**************************************************************************************************
   @Test
-  public void getLanguages_null_shouldReturnOk() throws Exception {
+  public void getLanguages_null_shouldReturnListOfStrings() throws Exception {
     // Given
     final String mockedEsoteric = "Arnoldc";
     final List<String> mockedLanguages = Stream.concat(

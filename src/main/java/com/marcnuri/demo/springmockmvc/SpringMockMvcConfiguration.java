@@ -48,8 +48,9 @@ public class SpringMockMvcConfiguration implements WebMvcConfigurer {
 //  Other Methods
 //**************************************************************************************************
   /**
-   * Resolved any .html file as a view (used in 'forward:' controllers)
-   * @return
+   * Resolves any .html file as a view (used in 'forward:' controllers)
+   *
+   * @return InternalResourceViewResolver with the specified configuration
    */
   @Bean
   public InternalResourceViewResolver htmlViewResolver() {
