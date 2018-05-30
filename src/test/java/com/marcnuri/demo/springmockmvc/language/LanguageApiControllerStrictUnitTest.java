@@ -52,14 +52,14 @@ public class LanguageApiControllerStrictUnitTest {
   @Test
   public void getLanguages_null_shouldReturnListOfStrings() throws Exception {
     // Given
-    final String mockedEsoteric = "Arnoldc";
-    final List<String> mockedLanguages = Stream.concat(
+    final Language mockedEsoteric = new Language("Arnoldc", "Lauri Hartikka");
+    final List<Language> mockedLanguages = Stream.concat(
         LanguageRepository.LANGUAGES.stream(),
         Stream.of(mockedEsoteric)).collect(Collectors.toList());
     doReturn(mockedLanguages).when(languageService).getLanguages(null);
 
     // When
-    final ResponseEntity<List<String>> result = languageApiController.getLanguages(null);
+    final ResponseEntity<List<Language>> result = languageApiController.getLanguages(null);
 
     // Then
     assertThat(result.getBody(), hasSize(mockedLanguages.size()));

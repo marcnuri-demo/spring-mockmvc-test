@@ -1,33 +1,32 @@
 /*
- * SpringMockMvcService.java
+ * Language.java
  *
- * Created on 2018-05-18, 6:47
+ * Created on 2018-05-30, 7:13
  */
 package com.marcnuri.demo.springmockmvc.language;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import java.io.Serializable;
+import java.util.Objects;
 
 /**
- * Created by Marc Nuri <marc@marcnuri.com> on 2018-05-18.
+ * Created by Marc Nuri <marc@marcnuri.com> on 2018-05-30.
  */
-@Service
-public class LanguageService {
+public class Language implements Serializable {
+
+  private static final long serialVersionUID = 6000115618481392347L;
 
 //**************************************************************************************************
 //  Fields
 //**************************************************************************************************
-  private final LanguageRepository languageRepository;
+  private final String name;
+  private final String designer;
 
 //**************************************************************************************************
 //  Constructors
 //**************************************************************************************************
-  @Autowired
-  public LanguageService(LanguageRepository languageRepository) {
-    this.languageRepository = languageRepository;
+  public Language(String name, String designer) {
+    this.name = name;
+    this.designer = designer;
   }
 
 //**************************************************************************************************
@@ -45,21 +44,34 @@ public class LanguageService {
 //**************************************************************************************************
 //  Getter/Setter Methods
 //**************************************************************************************************
-  public List<Language> getLanguages(String contains) {
-    final List<Language> ret;
-    final List<Language> allLanguages = languageRepository.findAll();
-    if (contains != null && !contains.isEmpty()) {
-      ret = allLanguages.stream().filter(l -> l.getName().contains(contains)).collect(Collectors.toList());
-    } else {
-      ret = allLanguages;
-    }
-    return ret;
+  public String getName() {
+    return name;
   }
 
-  public Optional<Language> getLanguage(String name) {
-    return languageRepository.findByName(name);
+  public String getDesigner() {
+    return designer;
   }
-//**************************************************************************************************
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Language language = (Language) o;
+    return Objects.equals(name, language.name) &&
+        Objects.equals(designer, language.designer);
+  }
+
+  @Override
+  public int hashCode() {
+
+    return Objects.hash(name, designer);
+  }
+
+  //**************************************************************************************************
 //  Static Methods
 //**************************************************************************************************
 

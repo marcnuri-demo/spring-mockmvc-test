@@ -5,7 +5,7 @@
  */
 package com.marcnuri.demo.springmockmvc.language;
 
-import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -15,6 +15,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.marcnuri.demo.springmockmvc.SpringMockMvcException;
 import com.marcnuri.demo.springmockmvc.language.LanguageApiControllerTest.LanguageApiControllerTestConfiguration;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.junit.After;
@@ -79,8 +80,8 @@ public class LanguageApiControllerTest {
   @Test
   public void getLanguages_null_shouldReturnOk() throws Exception {
     // Given
-    final String mockedEsoteric = "Arnoldc";
-    final List<String> mockedLanguages = Stream.concat(
+    final Language mockedEsoteric = new Language("Arnoldc", "Lauri Hartikka");
+    final List<Language> mockedLanguages = Stream.concat(
         LanguageRepository.LANGUAGES.stream(),
         Stream.of(mockedEsoteric)).collect(Collectors.toList());
     doReturn(mockedLanguages).when(languageService).getLanguages(null);
@@ -93,7 +94,7 @@ public class LanguageApiControllerTest {
     // Then
     result.andExpect(status().isOk());
     result.andExpect(jsonPath("$.length()").value(mockedLanguages.size()));
-    result.andExpect(jsonPath("$", hasItem(mockedEsoteric)));
+    result.andExpect(jsonPath("$[?(@.name === 'Arnoldc')]").exists());
   }
 
   @Test
@@ -126,6 +127,38 @@ public class LanguageApiControllerTest {
 
     // Then
     result.andExpect(status().isNotAcceptable());
+  }
+
+  @Test
+  public void getLanguage_existingLanguage_shouldReturnOk() throws Exception {
+    // Given
+    final String mockedLanguageName = "Arnoldc";
+    final Language mockedEsoteric = new Language(mockedLanguageName, "Lauri Hartikka");
+    doReturn(Optional.of(mockedEsoteric)).when(languageService).getLanguage(mockedLanguageName);
+
+    // When
+    final ResultActions result = mockMvc.perform(
+        get("/api/languages/".concat(mockedLanguageName))
+            .accept(MimeTypeUtils.APPLICATION_JSON_VALUE));
+
+    // Then
+    result.andExpect(status().isOk());
+    result.andExpect(jsonPath("$.name", is(mockedLanguageName)));
+  }
+
+  @Test
+  public void getLanguage_nonExistingLanguage_shouldReturnNotFound() throws Exception {
+    //
+    final String mockedLanguageName = "Arnoldc";
+    doReturn(Optional.empty()).when(languageService).getLanguage(mockedLanguageName);
+
+    // When
+    final ResultActions result = mockMvc.perform(
+        get("/api/languages/".concat(mockedLanguageName))
+            .accept(MimeTypeUtils.APPLICATION_JSON_VALUE));
+
+    // Then
+    result.andExpect(status().isNotFound());
   }
 
   @Configuration
