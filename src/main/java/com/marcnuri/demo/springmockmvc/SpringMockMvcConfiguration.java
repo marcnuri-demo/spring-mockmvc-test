@@ -9,7 +9,9 @@ import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -21,7 +23,8 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @Configuration
 @EnableWebMvc
 @EnableConfigurationProperties(ServerProperties.class)
-@ComponentScan("com.marcnuri.demo.springmockmvc")
+@ComponentScan(value = "com.marcnuri.demo.springmockmvc",
+    excludeFilters = @Filter(type = FilterType.REGEX, pattern = ".*Test.*"))
 public class SpringMockMvcConfiguration implements WebMvcConfigurer {
 
 //**************************************************************************************************

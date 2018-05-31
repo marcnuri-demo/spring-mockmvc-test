@@ -13,7 +13,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.marcnuri.demo.springmockmvc.SpringMockMvcException;
-import com.marcnuri.demo.springmockmvc.language.LanguageApiControllerTest.LanguageApiControllerTestConfiguration;
+import com.marcnuri.demo.springmockmvc.language.LanguageApiControllerTest.Config;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -24,8 +24,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ContextConfiguration;
@@ -45,7 +45,7 @@ import org.springframework.util.MimeTypeUtils;
 @ContextConfiguration(classes = {
     LanguageApiController.class
 })
-@Import(LanguageApiControllerTestConfiguration.class)
+@Import(Config.class)
 public class LanguageApiControllerTest {
 
 //**************************************************************************************************
@@ -98,7 +98,7 @@ public class LanguageApiControllerTest {
   }
 
   @Test
-  public void getLanguages_invalidInjectParam_shouldReturnException() throws Exception {
+  public void getLanguages_invalidInjectParam_shouldReturnBadRequest() throws Exception {
     // Given
     final String containsParam = "' or 1=1;/*";
     final HttpStatus mockedStatus = HttpStatus.BAD_REQUEST;
@@ -115,7 +115,7 @@ public class LanguageApiControllerTest {
   }
 
   @Test
-  public void getLanguages_invalidAcceptHeader_shouldReturnException() throws Exception {
+  public void getLanguages_invalidAcceptHeader_shouldReturnNotAcceptable() throws Exception {
     // Given
     final String invalidAcceptMimeType = MimeTypeUtils.APPLICATION_XML_VALUE;
     doReturn(LanguageRepository.LANGUAGES).when(languageService).getLanguages(null);
@@ -161,8 +161,8 @@ public class LanguageApiControllerTest {
     result.andExpect(status().isNotFound());
   }
 
-  @Configuration
-  protected static class LanguageApiControllerTestConfiguration {
+  @TestConfiguration
+  protected static class Config {
 
     @Bean
     public LanguageService languageService() {

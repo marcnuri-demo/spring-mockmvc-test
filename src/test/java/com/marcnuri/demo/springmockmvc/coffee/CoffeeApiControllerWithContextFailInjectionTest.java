@@ -10,7 +10,7 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 
-import com.marcnuri.demo.springmockmvc.coffee.CoffeeApiControllerWithContextFailInjectionTest.CoffeeApiControllerWithContextFailInjectionTestConfiguration;
+import com.marcnuri.demo.springmockmvc.coffee.CoffeeApiControllerWithContextFailInjectionTest.Config;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -42,7 +42,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 @ContextConfiguration(classes = {
     CoffeeApiController.class
 })
-@Import(CoffeeApiControllerWithContextFailInjectionTestConfiguration.class)
+@Import(Config.class)
 public class CoffeeApiControllerWithContextFailInjectionTest extends DependencyInjectionTestExecutionListener {
 
   @Autowired
@@ -76,7 +76,7 @@ public class CoffeeApiControllerWithContextFailInjectionTest extends DependencyI
   }
 
   @Configuration
-  protected static class CoffeeApiControllerWithContextFailInjectionTestConfiguration {
+  protected static class Config {
 
     @Bean
     public CoffeeService coffeeService() {
