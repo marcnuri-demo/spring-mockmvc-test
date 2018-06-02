@@ -146,7 +146,7 @@ public class LanguageApiControllerTest {
 
   @Test
   public void getLanguage_nonExistingLanguage_shouldReturnNotFound() throws Exception {
-    //
+    // Given
     final String mockedLanguageName = "Arnoldc";
     doReturn(Optional.empty()).when(languageService).getLanguage(mockedLanguageName);
 
