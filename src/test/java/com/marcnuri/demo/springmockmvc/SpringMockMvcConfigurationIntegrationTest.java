@@ -27,7 +27,7 @@ import org.springframework.web.context.WebApplicationContext;
  * Created by Marc Nuri <marc@marcnuri.com> on 2018-05-16.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@WebAppConfiguration()
+@WebAppConfiguration
 @ContextConfiguration(classes = {
     SpringMockMvcConfiguration.class
 })

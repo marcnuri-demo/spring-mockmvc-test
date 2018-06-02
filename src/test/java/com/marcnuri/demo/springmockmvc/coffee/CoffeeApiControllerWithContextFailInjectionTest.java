@@ -24,7 +24,6 @@ import org.springframework.test.context.TestContext;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
-import org.springframework.test.context.web.WebAppConfiguration;
 
 /**
  * Integration test to validate that Beans with mocked dependencies that contain {@link Autowired}
@@ -38,7 +37,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
     listeners = CoffeeApiControllerWithContextFailInjectionTest.class,
     inheritListeners = false
 )
-@WebAppConfiguration
 @ContextConfiguration(classes = {
     CoffeeApiController.class
 })
