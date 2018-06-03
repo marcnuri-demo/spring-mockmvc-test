@@ -1,7 +1,7 @@
 /*
- * LanguageApiControllerApplicationIntegrationTest.java
+ * LanguageApiControllerWebMvcTest.java
  *
- * Created on 2018-05-31, 6:50
+ * Created on 2018-06-03, 23:10
  */
 package com.marcnuri.demo.springmockmvc.language;
 
@@ -11,54 +11,28 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.marcnuri.demo.springmockmvc.SpringMockMvcConfiguration;
 import java.util.stream.Collectors;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.util.MimeTypeUtils;
-import org.springframework.web.context.WebApplicationContext;
 
 /**
- * Created by Marc Nuri <marc@marcnuri.com> on 2018-05-31.
+ * Created by Marc Nuri <marc@marcnuri.com> on 2018-06-03.
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@WebAppConfiguration
-@ContextConfiguration(classes = {
-    SpringMockMvcConfiguration.class
-})
-public class LanguageApiControllerApplicationIntegrationTest {
+@RunWith(SpringRunner.class)
+@WebMvcTest(controllers = LanguageApiController.class)
+public class LanguageApiControllerWebMvcTest {
 
 //**************************************************************************************************
 //  Fields
 //**************************************************************************************************
   @Autowired
-  private WebApplicationContext webApplicationContext;
-
   private MockMvc mockMvc;
-
-//**************************************************************************************************
-//  Test preparation
-//**************************************************************************************************
-  @Before
-  public void setUp() {
-    mockMvc = MockMvcBuilders
-        .webAppContextSetup(webApplicationContext)
-        .build();
-  }
-
-  @After
-  public void tearDown() {
-    mockMvc = null;
-  }
 
 //**************************************************************************************************
 //  Tests
