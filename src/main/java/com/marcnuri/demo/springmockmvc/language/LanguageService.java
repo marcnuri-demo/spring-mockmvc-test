@@ -59,6 +59,7 @@ public class LanguageService {
   public Optional<Language> getLanguage(String name) {
     return languageRepository.findByName(name);
   }
+
 //**************************************************************************************************
 //  Static Methods
 //**************************************************************************************************

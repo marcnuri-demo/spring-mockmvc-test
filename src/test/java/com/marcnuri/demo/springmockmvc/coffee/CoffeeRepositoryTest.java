@@ -35,4 +35,5 @@ public class CoffeeRepositoryTest {
     assertThat(results, hasSize(expectedSize));
     assertThat(results, hasItem(equalTo(validCoffee)));
   }
+
 }

@@ -20,10 +20,6 @@ public class SpringMockMvcException extends RuntimeException {
 //**************************************************************************************************
 //  Constructors
 //**************************************************************************************************
-  public SpringMockMvcException(HttpStatus httpStatus) {
-    this(httpStatus, null);
-  }
-
   public SpringMockMvcException(HttpStatus httpStatus, String message) {
     super(message);
     this.httpStatus = httpStatus;

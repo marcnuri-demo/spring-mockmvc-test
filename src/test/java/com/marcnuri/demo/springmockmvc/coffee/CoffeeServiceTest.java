@@ -39,7 +39,7 @@ public class CoffeeServiceTest {
   private CoffeeService coffeeService;
 
   @Test
-  public void getCoffees_na_shouldReturnOk() throws Exception {
+  public void getCoffees_na_shouldReturnList() throws Exception {
     // Given
     final String mockedCoffee = "Kopi luwak";
     final List<String> mockedCoffees = Arrays.asList(mockedCoffee);
