@@ -9,7 +9,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 import static org.mockito.Mockito.doReturn;
 
-import com.marcnuri.demo.springmockmvc.coffee.CoffeeApiControllerWithContextTest.Config;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.Test;
@@ -29,7 +28,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextConfiguration(classes = {
     CoffeeService.class
 })
-@Import(Config.class)
+@Import(CoffeeServiceTest.Config.class)
 public class CoffeeServiceTest {
 
   @Autowired
